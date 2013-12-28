@@ -19,6 +19,9 @@
                             <span ng-switch-when="join">
                               {{chatLine.username}} has joined the chat!
                             </span>
+                            <span ng-switch-when="left">
+                              {{chatLine.username}} has left the chat.
+                            </span>
                             <span ng-switch-default>
                               {{chatLine.username}}: {{chatLine.text}}
                             </span>

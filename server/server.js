@@ -19,10 +19,18 @@ io.sockets.on('connection', function(socket){
     });
 
     socket.on('userJoin', function(data){
+        socket.data = {username:data.username};
         console.log(data.username +' joined the chat.')
         io.sockets.emit('addChatline', {
             username: data.username,
             eventType: 'join'
+        })
+    });
+
+    socket.on('disconnect', function(){
+        io.sockets.emit('addChatline', {
+            username: socket.data.username,
+            eventType: 'left'
         })
     })
 });
