@@ -1,0 +1,15 @@
+
+<div ng-controller="HomeController">
+    <p>Welcome to Home, home of the chat {{dog}}.</p>
+
+    <div ng-controller="ChatController">
+
+        <ul>
+            <li ng-repeat="chatLine in chatLines">{{chatLine.username}}: {{chatLine.text}}</li>
+        </ul>
+
+        <input type="text" ng-model="enteredText" />
+        <button type="button" ng-click="sendChat()">Send</button>
+        {{enteredText}}
+    </div>
+</div>
