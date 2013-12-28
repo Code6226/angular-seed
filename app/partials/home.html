@@ -4,12 +4,32 @@
 
     <div ng-controller="ChatController">
 
-        <ul>
-            <li ng-repeat="chatLine in chatLines">{{chatLine.username}}: {{chatLine.text}}</li>
-        </ul>
+        <div ng-switch="myUsername == ''">
 
-        <input type="text" ng-model="enteredText" />
-        <button type="button" ng-click="sendChat()">Send</button>
-        {{enteredText}}
+            <div ng-switch-when="true" class="enterUsername">
+                <label>Username:</label>
+                <input type="text" ng-model="enteredUsername" />
+                <button type="button" ng-click="setUsername(enteredUsername)">Set</button>
+            </div>
+
+            <div ng-switch-default class="chatroom">
+                <ul>
+                    <li ng-repeat="chatLine in chatLines">
+                        <span ng-switch="chatLine.eventType">
+                            <span ng-switch-when="join">
+                              {{chatLine.username}} has joined the chat!
+                            </span>
+                            <span ng-switch-default>
+                              {{chatLine.username}}: {{chatLine.text}}
+                            </span>
+                        </span>
+                    </li>
+                </ul>
+
+                <input type="text" ng-model="enteredText" />
+                <button type="button" ng-click="sendChat(enteredText); enteredText=''">Send</button>
+            </div>
+
+        </div>
     </div>
 </div>

@@ -16,20 +16,29 @@ var HomeController = function($scope){
 
 
 var ChatController = function($scope, socket){
-    $scope.enteredText = '';
+    $scope.myUsername = '';
     $scope.chatLines = [
         {username: 'George', text: 'Hey'}
     ];
 
-    socket.on('userSpeaks', function (data) {
+    socket.on('addChatline', function (data) {
         $scope.$apply(function(){
             console.log(data);
             $scope.chatLines.push(data);
         });
     });
 
-    $scope.sendChat = function(){
-        socket.emit('sendChat',{username: 'User#256', text: $scope.enteredText})
-        $scope.enteredText = '';
+    $scope.sendChat = function(text){
+        socket.emit('sendChat',{
+            username: $scope.myUsername,
+            text: text
+        })
+    }
+
+    $scope.setUsername = function(username){
+        $scope.myUsername = username;
+        socket.emit('userJoin', {
+            username: $scope.myUsername
+        })
     }
 }

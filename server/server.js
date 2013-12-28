@@ -15,6 +15,14 @@ io.sockets.on('connection', function(socket){
     console.log('new connection just now!')
     socket.on('sendChat', function (data) {
         console.log(data.username +' spoke!')
-        io.sockets.emit('userSpeaks', data);
+        io.sockets.emit('addChatline', data);
     });
+
+    socket.on('userJoin', function(data){
+        console.log(data.username +' joined the chat.')
+        io.sockets.emit('addChatline', {
+            username: data.username,
+            eventType: 'join'
+        })
+    })
 });
